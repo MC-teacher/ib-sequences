@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 2A · Arithmetic Sequences & Series</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════
+   DESIGN: Academic editorial — dark navy base with warm
+   cream cards, gold accents, serif type, mathematical
+   precision in the layout.
+═══════════════════════════════════════════════════════ */
+:root {
+  --navy:    #131d30;
+  --navy2:   #1b2a47;
+  --teal:    #0d7377;
+  --teal2:   #14a085;
+  --gold:    #e8a020;
+  --gold2:   #f4bb50;
+  --cream:   #f5f0e8;
+  --cream2:  #ede7d9;
+  --white:   #ffffff;
+  --dark:    #1a1a1a;
+  --grey:    #5a6470;
+  --red:     #c0392b;
+  --green:   #1a7a4a;
+  --slide-w: 860px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--navy);
+  color: var(--cream);
+  font-family: 'Source Serif 4', Georgia, serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── TOP NAV ──────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(19,29,48,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(232,160,32,0.25);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; height: 52px;
+}
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-weight: 700;
+  color: var(--gold); letter-spacing: 0.03em;
+}
+.nav-pills {
+  display: flex; gap: 0.4rem; list-style: none; overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-pills::-webkit-scrollbar { display: none; }
+.nav-pills a {
+  display: block; padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem; font-weight: 600;
+  color: rgba(245,240,232,0.65);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.nav-pills a:hover, .nav-pills a.active {
+  background: var(--teal); color: var(--white);
+}
+
+/* ─── SLIDE STREAM ─────────────────────────────────── */
+main {
+  padding-top: 68px;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0;
+}
+
+/* each "slide" */
+.slide {
+  width: 100%; max-width: var(--slide-w);
+  margin: 0.6rem 1.2rem;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.45);
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.slide.visible { opacity: 1; transform: none; }
+
+/* ─── SLIDE TYPES ───────────────────────────────────── */
+
+/* TITLE */
+.s-title {
+  background: var(--navy2);
+  border: 1px solid rgba(232,160,32,0.3);
+  padding: 3rem 3.5rem 2.5rem;
+  position: relative;
+}
+.s-title::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--teal), var(--gold));
+}
+.chapter-badge {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: var(--teal);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem; font-weight: 900; color: var(--white);
+  margin-bottom: 1.2rem;
+}
+.s-title h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900; color: var(--white);
+  line-height: 1.1; margin-bottom: 0.4rem;
+}
+.s-title .subtitle {
+  font-size: 1.15rem; font-style: italic;
+  color: var(--gold); margin-bottom: 1.8rem;
+}
+.learning-goals { list-style: none; display: grid; gap: 0.5rem; }
+.learning-goals li {
+  display: flex; align-items: flex-start; gap: 0.6rem;
+  font-size: 0.92rem; color: rgba(245,240,232,0.8);
+}
+.learning-goals li::before {
+  content: '→'; color: var(--teal2); font-weight: 700;
+  flex-shrink: 0; margin-top: 0.05rem;
+}
+
+/* SECTION DIVIDER */
+.s-divider {
+  background: var(--teal);
+  padding: 2.2rem 3rem;
+  display: flex; align-items: center; gap: 2rem;
+  position: relative; overflow: hidden;
+}
+.s-divider::after {
+  content: attr(data-symbol);
+  position: absolute; right: 2rem; top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Playfair Display', serif;
+  font-size: 7rem; font-weight: 900;
+  color: rgba(255,255,255,0.08); line-height: 1;
+  pointer-events: none;
+}
+.divider-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem; font-weight: 900;
+  color: rgba(255,255,255,0.2);
+  line-height: 1; flex-shrink: 0;
+}
+.s-divider h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; font-weight: 700; color: var(--white);
+}
+.s-divider p { font-size: 0.9rem; color: rgba(255,255,255,0.75); margin-top: 0.3rem; }
+
+/* KEY POINT */
+.s-keypoint {
+  background: var(--cream);
+  color: var(--dark);
+  padding: 0;
+}
+.kp-header {
+  background: var(--navy2);
+  padding: 0.85rem 1.8rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.kp-badge {
+  background: var(--gold);
+  color: var(--navy);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem; font-weight: 600;
+  padding: 0.25rem 0.6rem; border-radius: 4px;
+  white-space: nowrap;
+}
+.kp-header h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; font-weight: 700; color: var(--white);
+}
+.kp-body { padding: 1.4rem 1.8rem; }
+.formula-box {
+  background: var(--navy2);
+  border-left: 4px solid var(--teal);
+  border-radius: 8px;
+  padding: 1.1rem 1.5rem;
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+.formula-box .formula {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-weight: 600; color: var(--white);
+}
+.formula-box .formula-alt {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem; color: var(--gold2);
+  margin-top: 0.4rem;
+}
+.note-list { list-style: none; display: grid; gap: 0.55rem; }
+.note-list li {
+  display: flex; align-items: flex-start; gap: 0.7rem;
+  font-size: 0.9rem; color: var(--dark);
+}
+.note-list li::before {
+  content: '▸'; color: var(--teal); font-size: 0.75rem;
+  flex-shrink: 0; margin-top: 0.2rem;
+}
+
+/* TWO COLUMN */
+.s-two-col {
+  background: var(--cream);
+  color: var(--dark);
+  padding: 0;
+}
+.two-col-header {
+  background: var(--navy2);
+  padding: 0.85rem 1.8rem;
+}
+.two-col-header h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; font-weight: 700; color: var(--white);
+}
+.two-col-body {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; min-height: 240px;
+}
+.col-card {
+  padding: 1.2rem 1.4rem;
+}
+.col-card:first-child { border-right: 1px solid var(--cream2); }
+.col-card h4 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem; font-weight: 600;
+  color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 0.8rem; padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--teal);
+}
+.col-card .col-content {
+  font-size: 0.88rem; line-height: 1.7; color: var(--dark);
+}
+.col-card .col-content strong { color: var(--teal); }
+
+/* WORKED EXAMPLE */
+.s-example {
+  background: var(--cream);
+  color: var(--dark);
+  padding: 0;
+}
+.ex-header {
+  background: var(--navy2);
+  padding: 0.85rem 1.8rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.ex-badge {
+  background: var(--teal);
+  color: var(--white);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem; font-weight: 600;
+  padding: 0.25rem 0.65rem; border-radius: 4px;
+  white-space: nowrap;
+}
+.ex-header h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem; font-weight: 700; color: var(--white);
+}
+.ex-body { padding: 1.4rem 1.8rem; }
+.question-box {
+  background: var(--white);
+  border: 1px solid var(--cream2);
+  border-left: 4px solid var(--teal);
+  border-radius: 6px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.2rem;
+}
+.question-box .q-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem; font-weight: 600;
+  color: var(--teal); text-transform: uppercase;
+  letter-spacing: 0.08em; margin-bottom: 0.4rem;
+}
+.question-box .q-text {
+  font-size: 0.95rem; line-height: 1.65; color: var(--dark);
+}
+.hints-section h4 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem; font-weight: 600;
+  color: var(--gold); text-transform: uppercase;
+  letter-spacing: 0.08em; margin-bottom: 0.6rem;
+}
+.hint-list { list-style: none; display: grid; gap: 0.4rem; }
+.hint-list li {
+  display: flex; gap: 0.6rem;
+  font-size: 0.88rem; color: var(--dark);
+}
+.hint-num {
+  background: var(--teal);
+  color: var(--white);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem; font-weight: 600;
+  width: 18px; height: 18px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 0.1rem;
+}
+
+/* BE THE EXAMINER — question only */
+.s-examiner-q {
+  background: var(--cream); color: var(--dark); padding: 0;
+}
+.examiner-q-header {
+  background: #4a2040;
+  padding: 0.85rem 1.8rem;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.examiner-q-header .ex-q-badge {
+  background: var(--gold); color: var(--navy);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem; font-weight: 700;
+  padding: 0.2rem 0.6rem; border-radius: 4px;
+}
+.examiner-q-header h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem; font-weight: 700; color: var(--white);
+}
+.examiner-q-body { padding: 1.4rem 1.8rem; }
+.challenge-box {
+  background: var(--white); border: 1px solid var(--cream2);
+  border-left: 4px solid #4a2040;
+  border-radius: 6px; padding: 1rem 1.2rem; margin-bottom: 1.2rem;
+}
+.challenge-box .q-text { font-size: 0.95rem; line-height: 1.65; }
+.task-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem; font-weight: 600;
+  color: #4a2040; font-style: italic;
+  margin-top: 0.5rem;
+}
+/* think-time note */
+.think-note {
+  background: rgba(74,32,64,0.08);
+  border: 1px dashed rgba(74,32,64,0.3);
+  border-radius: 6px; padding: 0.7rem 1rem;
+  font-size: 0.85rem; color: #4a2040; font-style: italic;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+
+/* BE THE EXAMINER — with solutions */
+.s-examiner {
+  background: var(--cream); color: var(--dark); padding: 0;
+}
+.examiner-header {
+  background: #4a2040;
+  padding: 0.85rem 1.8rem;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.examiner-header .ex-badge-purple {
+  background: var(--gold); color: var(--navy);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem; font-weight: 700;
+  padding: 0.2rem 0.6rem; border-radius: 4px;
+}
+.examiner-header h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem; font-weight: 700; color: var(--white);
+}
+.examiner-body { padding: 1.4rem 1.8rem; }
+.solutions-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.8rem; margin-top: 1rem;
+}
+.sol-card {
+  border-radius: 8px; overflow: hidden;
+  border: 1px solid var(--cream2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.sol-card-header {
+  padding: 0.5rem 0.85rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem; font-weight: 700; color: var(--white);
+}
+.sol-card-body {
+  background: var(--white);
+  padding: 0.85rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem; line-height: 1.7; color: var(--dark);
+}
+.sol-navy .sol-card-header  { background: var(--navy2); }
+.sol-red   .sol-card-header { background: var(--red); }
+.sol-green .sol-card-header { background: var(--green); }
+.examiner-note {
+  margin-top: 1rem;
+  font-size: 0.82rem; color: var(--teal);
+  font-style: italic;
+}
+
+/* EXERCISE SET */
+.s-exercise {
+  background: var(--cream); color: var(--dark); padding: 0;
+}
+.ex-set-header {
+  background: var(--navy2);
+  padding: 0.85rem 1.8rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.ex-set-header h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem; font-weight: 700; color: var(--white);
+}
+.ex-set-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem; font-weight: 600;
+  color: var(--gold); background: rgba(232,160,32,0.15);
+  padding: 0.2rem 0.6rem; border-radius: 4px;
+}
+.ex-set-body { padding: 1.2rem 1.4rem; }
+.problems-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+.prob-card {
+  background: var(--white);
+  border: 1px solid var(--cream2);
+  border-left: 3px solid var(--gold);
+  border-radius: 6px; padding: 0.8rem 1rem;
+}
+.prob-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem; font-weight: 700;
+  color: var(--teal); margin-bottom: 0.3rem;
+}
+.prob-q { font-size: 0.88rem; line-height: 1.55; color: var(--dark); }
+
+/* SUMMARY */
+.s-summary {
+  background: var(--navy2);
+  border: 1px solid rgba(232,160,32,0.25);
+  padding: 2rem 2.5rem;
+}
+.s-summary h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; font-weight: 700; color: var(--white);
+  margin-bottom: 1.4rem;
+}
+.summary-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.summary-table th {
+  text-align: left; padding: 0.6rem 0.9rem;
+  background: rgba(255,255,255,0.05);
+  color: var(--gold); font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase;
+  border-bottom: 1px solid rgba(232,160,32,0.3);
+}
+.summary-table td {
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  color: var(--cream); vertical-align: middle;
+}
+.summary-table td:nth-child(2) {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem; color: var(--gold2);
+}
+.summary-table tr:last-child td { border-bottom: none; }
+.summary-note {
+  margin-top: 1.2rem; padding: 0.75rem 1rem;
+  background: rgba(13,115,119,0.2);
+  border-left: 3px solid var(--teal2);
+  border-radius: 4px;
+  font-size: 0.82rem; color: var(--cream); font-style: italic;
+}
+
+/* ─── PROGRESS BAR ─────────────────────────────────── */
+.progress-bar {
+  position: fixed; top: 52px; left: 0; right: 0;
+  height: 3px; background: rgba(255,255,255,0.08); z-index: 99;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--gold));
+  width: 0%; transition: width 0.3s;
+}
+
+/* ─── SLIDE COUNTER ────────────────────────────────── */
+.slide-counter {
+  position: fixed; bottom: 1.2rem; right: 1.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem; color: rgba(245,240,232,0.4);
+}
+
+/* ─── FOOTER ───────────────────────────────────────── */
+footer {
+  max-width: var(--slide-w); width: 100%; margin: 1rem 0 2rem;
+  padding: 1rem 1.5rem;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem; color: rgba(245,240,232,0.3);
+}
+
+/* ─── RESPONSIVE ───────────────────────────────────── */
+@media (max-width: 640px) {
+  .two-col-body { grid-template-columns: 1fr; }
+  .col-card:first-child { border-right: none; border-bottom: 1px solid var(--cream2); }
+  .solutions-grid { grid-template-columns: 1fr; }
+  .problems-grid  { grid-template-columns: 1fr; }
+  .s-title, .s-divider { padding: 2rem 1.5rem; }
+  .kp-body, .ex-body, .examiner-body, .examiner-q-body, .ex-set-body { padding: 1rem 1.2rem; }
+  .nav-pills { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand">2A · Arithmetic Sequences</span>
+  <ul class="nav-pills" id="navPills"></ul>
+</nav>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<main id="slideStream"></main>
+
+<footer>IB Mathematics · Core: Sequences · Chapter 2A</footer>
+
+<div class="slide-counter" id="slideCounter"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   SLIDE DATA
+═══════════════════════════════════════════════════ */
+const SLIDES = [
+
+/* 0 ── TITLE ───────────────────────────────────── */
+{
+  type: 'title',
+  id: 'title',
+  navLabel: 'Start',
+  goals: [
+    'Use the formula for the nth term of an arithmetic sequence',
+    'Use the formula for the sum of the first n terms',
+    'Work with sigma notation for arithmetic series',
+    'Apply arithmetic sequences to real-world problems',
+  ]
+},
+
+/* 1 ── DEFINITION ───────────────────────────────── */
+{
+  type: 'two-col',
+  id: 'definition',
+  navLabel: 'Definition',
+  heading: 'What is an Arithmetic Sequence?',
+  left: {
+    title: 'Definition',
+    html: `An <strong>arithmetic sequence</strong> is formed by adding or subtracting the <strong>same number</strong> each time.<br><br>
+           This constant value is called the <strong>common difference, d</strong>.<br><br>
+           Examples:<br>
+           &nbsp; 1, 4, 7, 10, 13, …&nbsp;&nbsp;&nbsp;<em>d = +3</em><br>
+           &nbsp; 19, 15, 11, 7, 3, …&nbsp;&nbsp;<em>d = −4</em><br>
+           &nbsp; 5, 5, 5, 5, …&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>d = 0</em>`
+  },
+  right: {
+    title: 'Pattern of Terms',
+    html: `Term 1 :&nbsp;&nbsp; u₁<br>
+           Term 2 :&nbsp;&nbsp; u₁ + d<br>
+           Term 3 :&nbsp;&nbsp; u₁ + 2d<br>
+           Term 4 :&nbsp;&nbsp; u₁ + 3d<br>
+           Term n :&nbsp;&nbsp; u₁ + (n−1)d<br><br>
+           Each term is found by adding d to the previous one.`
+  }
+},
+
+/* 2 ── KEY POINT 2.1 ────────────────────────────── */
+{
+  type: 'keypoint',
+  id: 'kp21',
+  navLabel: 'KP 2.1',
+  badge: 'Key Point 2.1',
+  heading: 'nth Term of an Arithmetic Sequence',
+  formula: 'u<sub>n</sub> = u<sub>1</sub> + (n − 1)d',
+  notes: [
+    'u₁ = first term',
+    'd = common difference (can be negative or zero)',
+    'n = position (term number) you want to find',
+    'Alternative form: uₙ = u₁ + nd − d',
+  ]
+},
+
+/* 3 ── WORKED EXAMPLE 2.1 ──────────────────────── */
+{
+  type: 'example',
+  id: 'we21',
+  navLabel: 'WE 2.1',
+  badge: 'Worked Example 2.1',
+  heading: 'Finding a Specific Term',
+  question: 'An arithmetic sequence has first term 7 and common difference 8.\nFind the 10th term.',
+  hints: [
+    'Identify u₁ = 7 and d = 8 from the question.',
+    'Substitute into  uₙ = u₁ + (n−1)d  with n = 10.',
+  ]
+},
+
+/* 4 ── WORKED EXAMPLE 2.2 ──────────────────────── */
+{
+  type: 'example',
+  id: 'we22',
+  navLabel: 'WE 2.2',
+  badge: 'Worked Example 2.2',
+  heading: 'Finding u₁ and d from Two Terms',
+  question: 'The 3rd term of an arithmetic sequence is 10 and the 15th term is 46.\nFind the first term and the common difference.',
+  hints: [
+    'Write two equations using  uₙ = u₁ + (n−1)d  (one for u₃, one for u₁₅).',
+    'Solve the simultaneous equations — use your GDC.',
+  ]
+},
+
+/* 5 ── WORKED EXAMPLE 2.3 ──────────────────────── */
+{
+  type: 'example',
+  id: 'we23',
+  navLabel: 'WE 2.3',
+  badge: 'Worked Example 2.3',
+  heading: 'Finding the Number of Terms',
+  question: 'Find the number of terms in the arithmetic sequence  1, 4, 7, … , 100.',
+  hints: [
+    'Identify u₁ = 1 and d = 3.',
+    'Write the nth term formula, then set uₙ = 100 and solve for n.',
+  ]
+},
+
+/* 6 ── DIVIDER: SERIES ──────────────────────────── */
+{
+  type: 'divider',
+  id: 'divider-series',
+  navLabel: '─',
+  symbol: 'Σ',
+  bigNum: 'Σ',
+  heading: 'Arithmetic Series',
+  sub: 'Sum of the first n terms'
+},
+
+/* 7 ── KEY POINT 2.2 ────────────────────────────── */
+{
+  type: 'keypoint',
+  id: 'kp22',
+  navLabel: 'KP 2.2',
+  badge: 'Key Point 2.2',
+  heading: 'Sum of the First n Terms',
+  formula: 'S<sub>n</sub> = <sup>n</sup>&frasl;<sub>2</sub> [2u<sub>1</sub> + (n−1)d]',
+  formulaAlt: 'or&nbsp;&nbsp; S<sub>n</sub> = <sup>n</sup>&frasl;<sub>2</sub> (u<sub>1</sub> + u<sub>n</sub>)',
+  notes: [
+    'Use version 1 when you know u₁ and d.',
+    'Use version 2 when you know the first and last terms.',
+    'Sₙ is the sum of the first n terms — also called an arithmetic series.',
+    'S₁ = u₁,  S₂ = u₁ + u₂,  and so on.',
+  ]
+},
+
+/* 8 ── WORKED EXAMPLE 2.4 ──────────────────────── */
+{
+  type: 'example',
+  id: 'we24',
+  navLabel: 'WE 2.4',
+  badge: 'Worked Example 2.4',
+  heading: 'Finding the Sum of Terms',
+  question: 'An arithmetic sequence has first term 5 and common difference −2.\nFind the sum of the first 10 terms.',
+  hints: [
+    'Identify u₁ = 5,  d = −2,  n = 10.',
+    'Use  Sₙ = n/2 [2u₁ + (n−1)d].',
+  ]
+},
+
+/* 9 ── WORKED EXAMPLE 2.5 ──────────────────────── */
+{
+  type: 'example',
+  id: 'we25',
+  navLabel: 'WE 2.5',
+  badge: 'Worked Example 2.5',
+  heading: 'Using First & Last Term',
+  question: 'An arithmetic sequence has first term 10 and last term 1000.\nIf there are 30 terms, find the sum of all the terms.',
+  hints: [
+    'Use Sₙ = n/2 (u₁ + uₙ)  — the second version of the formula.',
+    'Here n = 30,  u₁ = 10,  uₙ = 1000.',
+  ]
+},
+
+/* 10 ── SIGMA NOTATION ──────────────────────────── */
+{
+  type: 'two-col',
+  id: 'sigma',
+  navLabel: 'Sigma',
+  heading: 'Sigma Notation for Arithmetic Series',
+  left: {
+    title: 'Key Point 2.3',
+    html: `<strong>Σ (r = 1 to n) u<sub>r</sub> = u₁ + u₂ + … + u<sub>n</sub></strong><br><br>
+           The value at the <strong>bottom</strong> shows where counting starts.<br>
+           The value at the <strong>top</strong> shows where it stops.<br><br>
+           Example:<br>
+           &nbsp; Σ (r=3 to 10) (5r+2)<br>
+           &nbsp; = 17 + 22 + 27 + …<br>
+           &nbsp; → u₁ = 17,  d = 5,  n = 8`
+  },
+  right: {
+    title: 'Worked Example 2.6',
+    html: `Evaluate  Σ (r=3 to 10) (5r + 2)<br><br>
+           <strong>Step 1</strong>&nbsp; r = 3 → 5(3)+2 = 17 &nbsp;∴ u₁ = 17<br>
+           <strong>Step 2</strong>&nbsp; d = 5<br>
+           <strong>Step 3</strong>&nbsp; r runs 3…10 → n = 8<br>
+           <strong>Step 4</strong>&nbsp; S₈ = 8/2 [2×17 + 7×5]<br>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 4 × [34+35] = <strong>276</strong>`
+  }
+},
+
+/* 11 ── WORKED EXAMPLE 2.7 ──────────────────────── */
+{
+  type: 'example',
+  id: 'we27',
+  navLabel: 'WE 2.7',
+  badge: 'Worked Example 2.7',
+  heading: 'Finding n Given the Sum',
+  question: 'The sum of the first n terms of the arithmetic sequence  3, 7, 11, 15, …  is 465.\nFind n.',
+  hints: [
+    'Write Sₙ in terms of n using  Sₙ = n/2 [2u₁ + (n−1)d].',
+    'Simplify to get a quadratic in n, then set it equal to 465.',
+    'Solve using your GDC table function.',
+  ]
+},
+
+/* 12 ── BE THE EXAMINER — QUESTION ONLY ────────── */
+{
+  type: 'examiner-q',
+  id: 'bte-q',
+  navLabel: 'Examiner?',
+  heading: 'Be the Examiner 2.1 — Your Turn',
+  question: 'Ben starts a new job on 1 January 2020 earning £20 000. His salary will go up by £750 on 1 January each year. What will he earn in 2030?',
+  taskLine: 'Three students have each written a solution. Before looking at the next slide — which solution do you think is correct? Can you spot the errors in the others?',
+  thinkNote: '💡 Hint: Think carefully about which year corresponds to term 1 of the sequence.',
+},
+
+/* 13 ── BE THE EXAMINER — WITH SOLUTIONS ────────── */
+{
+  type: 'examiner',
+  id: 'bte',
+  navLabel: 'Solutions',
+  heading: 'Be the Examiner 2.1 — Solutions',
+  question: 'Ben starts a new job on 1 January 2020 earning £20 000. His salary will go up by £750 on 1 January each year. What will he earn in 2030?',
+  solutions: [
+    {
+      label: 'Solution 1',
+      style: 'sol-navy',
+      lines: 'u₁₀ = 20 000 + (10−1) × 750\n     = 26 750\n→ He will earn £26 750.'
+    },
+    {
+      label: 'Solution 2',
+      style: 'sol-red',
+      lines: 'S₁₀ = 10/2 [2×20 000 + (10−1)×750]\n     = 233 750\n→ He will earn £233 750.'
+    },
+    {
+      label: 'Solution 3',
+      style: 'sol-green',
+      lines: 'u₁₁ = 20 000 + (11−1) × 750\n     = 27 500\n→ He will earn £27 500.'
+    },
+  ],
+  note: '✓ Solution 3 is correct.  Solution 1 gives the 2029 salary (off by one year).  Solution 2 calculates a total sum — not the salary in a specific year.',
+},
+
+/* 14 ── APPLICATIONS ────────────────────────────── */
+{
+  type: 'two-col',
+  id: 'applications',
+  navLabel: 'Applications',
+  heading: 'Applications of Arithmetic Sequences',
+  left: {
+    title: 'Real-World Contexts',
+    html: `Arithmetic sequences model any process where a quantity changes by a <strong>constant amount</strong>.<br><br>
+           Common contexts:<br>
+           &nbsp; • Simple interest (fixed amount added each year)<br>
+           &nbsp; • Salary increases by a fixed amount annually<br>
+           &nbsp; • Staircase heights (equal step sizes)<br>
+           &nbsp; • Regular fixed deposits into savings<br><br>
+           <strong>Simple Interest</strong> ≡ arithmetic sequence with<br>d = (interest rate) × (initial deposit).`
+  },
+  right: {
+    title: 'Worked Example 2.8',
+    html: `A savings account pays 10% simple interest. Rashid invests €3 000. How much will he have after 5 years?<br><br>
+           10% of 3 000 = 300 added each year.<br>
+           Year 1: 3 300 &nbsp; Year 2: 3 600 &nbsp; …<br><br>
+           → Arithmetic sequence:<br>
+           &nbsp;&nbsp; u₁ = 3 300,&nbsp; d = 300<br>
+           → u₅ = 3 300 + 4 × 300 = <strong>€4 500</strong>`
+  }
+},
+
+/* 15–18 ── EXERCISE SETS ─────────────────────────── */
+{
+  type: 'exercise',
+  id: 'ex-core',
+  navLabel: 'Ex: Core',
+  heading: 'Exercise 2A — Core Skills',
+  tag: 'Q 1–5',
+  problems: [
+    { num: '1b', q: 'u₁ = 11,  d = 3.  Find  u₂₀.' },
+    { num: '2b', q: 'u₁ = 11,  d = −3.  Find  u₁₈.' },
+    { num: '3b', q: 'u₁ = 19,  u₉ = 75.  Find d.' },
+    { num: '4b', q: 'u₁ = 100,  u₉ = 80.  Find d.' },
+    { num: '5a', q: 'u₈ = 12,  u₁₁ = 33.  Find u₁ and d.' },
+    { num: '5b', q: 'u₇ = 11,  u₁₂ = 56.  Find u₁ and d.' },
+  ]
+},
+{
+  type: 'exercise',
+  id: 'ex-nth',
+  navLabel: 'Ex: nth Term',
+  heading: 'Exercise 2A — nth Term Formula',
+  tag: 'Q 6–8',
+  problems: [
+    { num: '6a', q: 'u₁ = 8,  d = −3.  Write the formula for uₙ.' },
+    { num: '6b', q: 'u₁ = 10,  d = 4.  Write the formula for uₙ.' },
+    { num: '7a', q: 'u₁ = 3,  u₅ = 11.  Write the formula for uₙ.' },
+    { num: '7b', q: 'u₁ = 10,  u₁₁ = 50.  Write the formula for uₙ.' },
+    { num: '8a', q: 'u₂ = 6,  u₅ = 21.  Write the formula for uₙ.' },
+    { num: '8b', q: 'u₃ = 14,  u₆ = 5.  Write the formula for uₙ.' },
+  ]
+},
+{
+  type: 'exercise',
+  id: 'ex-sums',
+  navLabel: 'Ex: Sums',
+  heading: 'Exercise 2A — Number of Terms & Sums',
+  tag: 'Q 9–15',
+  problems: [
+    { num: '9a',  q: 'How many terms in  2, 8, 14, …, 200?' },
+    { num: '9b',  q: 'How many terms in  5, 9, 13, …, 97?' },
+    { num: '10a', q: 'How many terms in  13, 7, 1, …, −59?' },
+    { num: '11a', q: 'u₁ = 9,  d = 4.  Find S₁₂.' },
+    { num: '11b', q: 'u₁ = 17,  d = 2.  Find S₂₀.' },
+    { num: '13b', q: 'u₁ = 9,  u₅ = 41.  Find S₁₂.' },
+  ]
+},
+{
+  type: 'exercise',
+  id: 'ex-sigma',
+  navLabel: 'Ex: Σ & Hard',
+  heading: 'Exercise 2A — Sigma & Harder Problems',
+  tag: 'Q 17–36',
+  problems: [
+    { num: '17a', q: 'Evaluate  Σ (r=1 to 7) (2r + 7).' },
+    { num: '17b', q: 'Evaluate  Σ (r=1 to 10) (3r + 4).' },
+    { num: '18a', q: 'Evaluate  Σ (r=5 to 17) (6r − 4).' },
+    { num: '29',  q: 'The 10th term is 26 and the 30th term is 83. Find the 50th term.' },
+    { num: '34',  q: 'Three consecutive terms: 3x+1,  2x+1,  4x−5. Find x.' },
+    { num: '35',  q: 'The 5th term is double the 2nd term, and the 7th term is 28. Find the 11th term.' },
+  ]
+},
+
+/* 19 ── SUMMARY ─────────────────────────────────── */
+{
+  type: 'summary',
+  id: 'summary',
+  navLabel: 'Summary',
+}
+
+];
+
+/* ═══════════════════════════════════════════════════
+   RENDER
+═══════════════════════════════════════════════════ */
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function nl2br(s) {
+  return escHtml(s).replace(/\n/g,'<br>');
+}
+
+function renderSlide(sl) {
+  switch (sl.type) {
+    case 'title':       return renderTitle(sl);
+    case 'divider':     return renderDivider(sl);
+    case 'keypoint':    return renderKeypoint(sl);
+    case 'two-col':     return renderTwoCol(sl);
+    case 'example':     return renderExample(sl);
+    case 'examiner-q':  return renderExaminerQ(sl);
+    case 'examiner':    return renderExaminer(sl);
+    case 'exercise':    return renderExercise(sl);
+    case 'summary':     return renderSummary(sl);
+    default: return '';
+  }
+}
+
+function renderTitle(sl) {
+  const goals = sl.goals.map(g => `<li>${escHtml(g)}</li>`).join('');
+  return `
+  <div class="slide s-title" id="${sl.id}" data-slide>
+    <div class="chapter-badge">2</div>
+    <h1>Core: Sequences</h1>
+    <p class="subtitle">2A &nbsp;·&nbsp; Arithmetic Sequences &amp; Series</p>
+    <ul class="learning-goals">${goals}</ul>
+  </div>`;
+}
+
+function renderDivider(sl) {
+  return `
+  <div class="slide s-divider" id="${sl.id}" data-slide data-symbol="${sl.symbol}">
+    <div class="divider-num">${sl.bigNum}</div>
+    <div>
+      <h2>${escHtml(sl.heading)}</h2>
+      <p>${escHtml(sl.sub)}</p>
+    </div>
+  </div>`;
+}
+
+function renderKeypoint(sl) {
+  const notes = sl.notes.map(n => `<li>${escHtml(n)}</li>`).join('');
+  const altHtml = sl.formulaAlt ? `<div class="formula-alt">${sl.formulaAlt}</div>` : '';
+  return `
+  <div class="slide s-keypoint" id="${sl.id}" data-slide>
+    <div class="kp-header">
+      <span class="kp-badge">${escHtml(sl.badge)}</span>
+      <h3>${escHtml(sl.heading)}</h3>
+    </div>
+    <div class="kp-body">
+      <div class="formula-box">
+        <div class="formula">${sl.formula}</div>
+        ${altHtml}
+      </div>
+      <ul class="note-list">${notes}</ul>
+    </div>
+  </div>`;
+}
+
+function renderTwoCol(sl) {
+  return `
+  <div class="slide s-two-col" id="${sl.id}" data-slide>
+    <div class="two-col-header"><h3>${escHtml(sl.heading)}</h3></div>
+    <div class="two-col-body">
+      <div class="col-card">
+        <h4>${escHtml(sl.left.title)}</h4>
+        <div class="col-content">${sl.left.html}</div>
+      </div>
+      <div class="col-card">
+        <h4>${escHtml(sl.right.title)}</h4>
+        <div class="col-content">${sl.right.html}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderExample(sl) {
+  const hints = sl.hints.map((h, i) => `
+    <li><span class="hint-num">${i+1}</span><span>${escHtml(h)}</span></li>`).join('');
+  return `
+  <div class="slide s-example" id="${sl.id}" data-slide>
+    <div class="ex-header">
+      <span class="ex-badge">${escHtml(sl.badge)}</span>
+      <h3>${escHtml(sl.heading)}</h3>
+    </div>
+    <div class="ex-body">
+      <div class="question-box">
+        <div class="q-label">Question</div>
+        <div class="q-text">${nl2br(sl.question)}</div>
+      </div>
+      <div class="hints-section">
+        <h4>Hints / Strategy</h4>
+        <ul class="hint-list">${hints}</ul>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderExaminerQ(sl) {
+  return `
+  <div class="slide s-examiner-q" id="${sl.id}" data-slide>
+    <div class="examiner-q-header">
+      <span class="ex-q-badge">Be the Examiner</span>
+      <h3>${escHtml(sl.heading)}</h3>
+    </div>
+    <div class="examiner-q-body">
+      <div class="challenge-box">
+        <div class="q-text">${nl2br(sl.question)}</div>
+      </div>
+      <p class="task-label">${escHtml(sl.taskLine)}</p>
+      <div class="think-note" style="margin-top:1rem;">${escHtml(sl.thinkNote)}</div>
+    </div>
+  </div>`;
+}
+
+function renderExaminer(sl) {
+  const sols = sl.solutions.map(s => `
+    <div class="sol-card ${s.style}">
+      <div class="sol-card-header">${escHtml(s.label)}</div>
+      <div class="sol-card-body">${nl2br(s.lines)}</div>
+    </div>`).join('');
+  return `
+  <div class="slide s-examiner" id="${sl.id}" data-slide>
+    <div class="examiner-header">
+      <span class="ex-badge-purple">Be the Examiner 2.1</span>
+      <h3>${escHtml(sl.heading)}</h3>
+    </div>
+    <div class="examiner-body">
+      <div class="challenge-box">
+        <div class="q-text">${nl2br(sl.question)}</div>
+      </div>
+      <div class="solutions-grid">${sols}</div>
+      <p class="examiner-note">${escHtml(sl.note)}</p>
+    </div>
+  </div>`;
+}
+
+function renderExercise(sl) {
+  const cards = sl.problems.map(p => `
+    <div class="prob-card">
+      <div class="prob-num">Q ${p.num}</div>
+      <div class="prob-q">${escHtml(p.q)}</div>
+    </div>`).join('');
+  return `
+  <div class="slide s-exercise" id="${sl.id}" data-slide>
+    <div class="ex-set-header">
+      <h3>${escHtml(sl.heading)}</h3>
+      <span class="ex-set-tag">${escHtml(sl.tag)}</span>
+    </div>
+    <div class="ex-set-body">
+      <div class="problems-grid">${cards}</div>
+    </div>
+  </div>`;
+}
+
+function renderSummary() {
+  const rows = [
+    ['nth term', 'uₙ = u₁ + (n−1)d', 'Find any specific term'],
+    ['Sum — version 1', 'Sₙ = n/2 [2u₁ + (n−1)d]', 'Know u₁ and d'],
+    ['Sum — version 2', 'Sₙ = n/2 (u₁ + uₙ)', 'Know first and last terms'],
+    ['Sigma notation', 'Σuᵣ = u₁ + u₂ + … + uₙ', 'Shorthand for sums'],
+  ].map(r => `<tr>${r.map(c => `<td>${escHtml(c)}</td>`).join('')}</tr>`).join('');
+
+  return `
+  <div class="slide s-summary" id="summary" data-slide>
+    <h3>Chapter 2A — Summary</h3>
+    <table class="summary-table">
+      <thead><tr><th>Formula</th><th>Expression</th><th>When to Use</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <p class="summary-note">
+      Key Reminder: n counts the POSITION of the term, not the value.
+      Always set up the sequence carefully — identify u₁ and d — before substituting.
+    </p>
+  </div>`;
+}
+
+/* ── Build DOM ─────────────────────────────────────── */
+const stream = document.getElementById('slideStream');
+const navPills = document.getElementById('navPills');
+
+SLIDES.forEach((sl, i) => {
+  stream.insertAdjacentHTML('beforeend', renderSlide(sl));
+  if (sl.navLabel && sl.navLabel !== '─') {
+    const li = document.createElement('li');
+    li.innerHTML = `<a href="#${sl.id}" data-nav="${i}">${sl.navLabel}</a>`;
+    navPills.appendChild(li);
+  }
+});
+
+/* ── Intersection Observer (fade-in) ──────────────── */
+const allSlides = document.querySelectorAll('[data-slide]');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.08 });
+allSlides.forEach(s => obs.observe(s));
+
+/* ── Progress & counter ───────────────────────────── */
+const fill   = document.getElementById('progressFill');
+const counter= document.getElementById('slideCounter');
+const navAs  = navPills.querySelectorAll('a');
+
+function updateProgress() {
+  const scrolled = window.scrollY;
+  const total    = document.body.scrollHeight - window.innerHeight;
+  const pct      = total > 0 ? (scrolled / total) * 100 : 0;
+  fill.style.width = pct + '%';
+
+  // highlight active nav pill
+  let active = 0;
+  allSlides.forEach((s, i) => {
+    const rect = s.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.5) active = i;
+  });
+  // map slide index to nav item
+  counter.textContent = `${active + 1} / ${allSlides.length}`;
+  navAs.forEach(a => {
+    a.classList.toggle('active', parseInt(a.dataset.nav) === active);
+  });
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+updateProgress();
+</script>
+</body>
+</html>
