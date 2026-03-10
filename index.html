@@ -478,6 +478,119 @@ main {
   font-size: 0.82rem; color: var(--cream); font-style: italic;
 }
 
+/* ─── Q&A SLIDE (Question → Solution) ──────────────── */
+.s-qa {
+  background: var(--cream); color: var(--dark); padding: 0;
+}
+.qa-header {
+  background: var(--navy2);
+  padding: 0.85rem 1.8rem;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.qa-qnum {
+  background: var(--gold);
+  color: var(--navy);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem; font-weight: 700;
+  padding: 0.22rem 0.65rem; border-radius: 4px;
+  white-space: nowrap;
+}
+.qa-header h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem; font-weight: 700; color: var(--white);
+}
+.qa-body { padding: 1.2rem 1.8rem 1.4rem; }
+
+/* question panel */
+.qa-question {
+  background: var(--white);
+  border: 1px solid var(--cream2);
+  border-left: 4px solid var(--teal);
+  border-radius: 6px;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1rem;
+}
+.qa-qlabel {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.66rem; font-weight: 600;
+  color: var(--teal); text-transform: uppercase;
+  letter-spacing: 0.08em; margin-bottom: 0.35rem;
+}
+.qa-qtext { font-size: 0.93rem; line-height: 1.65; }
+
+/* hint strip */
+.qa-hint {
+  background: rgba(13,115,119,0.08);
+  border: 1px dashed rgba(13,115,119,0.35);
+  border-radius: 5px;
+  padding: 0.55rem 0.9rem;
+  font-size: 0.82rem; color: var(--teal);
+  font-style: italic; margin-bottom: 1rem;
+  display: flex; align-items: flex-start; gap: 0.5rem;
+}
+
+/* solution panel — revealed on click */
+.qa-solution {
+  border-radius: 8px; overflow: hidden;
+  border: 1px solid var(--cream2);
+}
+.qa-sol-toggle {
+  width: 100%;
+  background: var(--navy2);
+  color: var(--white);
+  border: none; cursor: pointer;
+  padding: 0.7rem 1.1rem;
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: background 0.2s;
+}
+.qa-sol-toggle:hover { background: var(--teal); }
+.qa-sol-arrow {
+  transition: transform 0.3s;
+  font-size: 0.9rem;
+}
+.qa-sol-toggle.open .qa-sol-arrow { transform: rotate(180deg); }
+.qa-sol-body {
+  background: var(--white);
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.qa-sol-body.open { max-height: 600px; }
+.qa-sol-inner { padding: 1rem 1.1rem; }
+
+/* step rows */
+.sol-steps { display: grid; gap: 0.6rem; }
+.sol-step {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+}
+.step-badge {
+  background: var(--teal);
+  color: var(--white);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem; font-weight: 700;
+  padding: 0.18rem 0.5rem; border-radius: 3px;
+  white-space: nowrap; flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+.step-content { font-size: 0.88rem; line-height: 1.6; color: var(--dark); }
+.step-content .math {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem; color: var(--navy2);
+  background: var(--cream); padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+}
+.sol-answer {
+  margin-top: 0.85rem;
+  padding: 0.6rem 0.9rem;
+  background: var(--navy2);
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88rem; color: var(--gold2);
+  font-weight: 600;
+}
+
 /* ─── PROGRESS BAR ─────────────────────────────────── */
 .progress-bar {
   position: fixed; top: 52px; left: 0; right: 0;
@@ -862,6 +975,297 @@ const SLIDES = [
   ]
 },
 
+/* ── DIVIDER: EXERCISE 2A ───────────────────────────── */
+{
+  type: 'divider',
+  id: 'divider-ex',
+  navLabel: '─',
+  symbol: 'Q',
+  bigNum: 'Ex',
+  heading: 'Exercise 2A — Full Solutions',
+  sub: 'Questions 19 – 25 with step-by-step working'
+},
+
+/* Q19a */
+{
+  type: 'qa', id: 'q19a', navLabel: 'Q19a',
+  qnum: 'Q 19a', heading: 'Number of Terms in an Arithmetic Sequence',
+  question: '4, 9, 14, …    Sₙ = 442\nFind n.',
+  hint: '💡 Use  Sₙ = n/2 [2u₁ + (n−1)d]  and set it equal to 442, then solve the quadratic.',
+  steps: [
+    { label:'Identify', text:'u₁ = 4,  d = 5' },
+    { label:'Formula',  text:'Sₙ = n/2 [2(4) + (n−1)(5)] = n/2 [8 + 5n − 5] = n/2 [5n + 3]' },
+    { label:'Equation', text:'n/2 (5n + 3) = 442  →  5n² + 3n = 884  →  5n² + 3n − 884 = 0' },
+    { label:'Solve',    text:'Using GDC (or quadratic formula):  n = 13  ✓  (reject negative root)' },
+  ],
+  answer: '∴  n = 13'
+},
+
+/* Q19b */
+{
+  type: 'qa', id: 'q19b', navLabel: 'Q19b',
+  qnum: 'Q 19b', heading: 'Number of Terms in an Arithmetic Sequence',
+  question: '8, 9, 10, …    Sₙ = 125\nFind n.',
+  hint: '💡 Same method — set up Sₙ formula, form a quadratic, solve.',
+  steps: [
+    { label:'Identify', text:'u₁ = 8,  d = 1' },
+    { label:'Formula',  text:'Sₙ = n/2 [2(8) + (n−1)(1)] = n/2 [16 + n − 1] = n/2 (n + 15)' },
+    { label:'Equation', text:'n(n + 15)/2 = 125  →  n² + 15n = 250  →  n² + 15n − 250 = 0' },
+    { label:'Solve',    text:'(n + 25)(n − 10) = 0  →  n = 10  ✓  (reject n = −25)' },
+  ],
+  answer: '∴  n = 10'
+},
+
+/* Q20a */
+{
+  type: 'qa', id: 'q20a', navLabel: 'Q20a',
+  qnum: 'Q 20a', heading: 'Finding n Given u₁, d, and Sₙ',
+  question: 'u₁ = 20,  d = −1,  Sₙ = 200\nFind n.',
+  hint: '💡 Substitute u₁ and d into the Sₙ formula, set equal to 200, and solve.',
+  steps: [
+    { label:'Formula',  text:'Sₙ = n/2 [2(20) + (n−1)(−1)] = n/2 [40 − n + 1] = n/2 (41 − n)' },
+    { label:'Equation', text:'n(41 − n)/2 = 200  →  41n − n² = 400  →  n² − 41n + 400 = 0' },
+    { label:'Solve',    text:'(n − 16)(n − 25) = 0  →  n = 16  or  n = 25' },
+    { label:'Check',    text:'Both are valid — two different points where the running sum hits 200 (the sequence becomes negative after u₂₁ = 0).' },
+  ],
+  answer: '∴  n = 16  or  n = 25'
+},
+
+/* Q20b */
+{
+  type: 'qa', id: 'q20b', navLabel: 'Q20b',
+  qnum: 'Q 20b', heading: 'Finding n Given u₁, d, and Sₙ',
+  question: 'u₁ = 100,  d = −5,  Sₙ = 1000\nFind n.',
+  hint: '💡 Same approach — form the Sₙ expression, set equal to 1000, solve quadratic.',
+  steps: [
+    { label:'Formula',  text:'Sₙ = n/2 [2(100) + (n−1)(−5)] = n/2 [200 − 5n + 5] = n/2 (205 − 5n)' },
+    { label:'Simplify', text:'= 5n/2 (41 − n)' },
+    { label:'Equation', text:'5n(41 − n)/2 = 1000  →  5n(41 − n) = 2000  →  n(41 − n) = 400' },
+    { label:'Solve',    text:'41n − n² = 400  →  n² − 41n + 400 = 0  →  (n−16)(n−25) = 0' },
+  ],
+  answer: '∴  n = 16  or  n = 25'
+},
+
+/* Q21a */
+{
+  type: 'qa', id: 'q21a', navLabel: 'Q21a',
+  qnum: 'Q 21a', heading: 'First Term 7, Common Difference 11',
+  question: 'An arithmetic sequence has first term 7 and common difference 11.\na)  Find the 20th term.',
+  hint: '💡 Use  uₙ = u₁ + (n−1)d  with n = 20.',
+  steps: [
+    { label:'Formula', text:'uₙ = u₁ + (n−1)d' },
+    { label:'Sub',     text:'u₂₀ = 7 + (20−1) × 11 = 7 + 19 × 11 = 7 + 209' },
+  ],
+  answer: '∴  u₂₀ = 216'
+},
+
+/* Q21b */
+{
+  type: 'qa', id: 'q21b', navLabel: 'Q21b',
+  qnum: 'Q 21b', heading: 'First Term 7, Common Difference 11',
+  question: 'An arithmetic sequence has first term 7 and common difference 11.\nb)  Find the sum of the first 20 terms.',
+  hint: '💡 Use  Sₙ = n/2 (u₁ + uₙ).  You already know u₂₀ = 216.',
+  steps: [
+    { label:'Formula', text:'S₂₀ = 20/2 (u₁ + u₂₀)' },
+    { label:'Sub',     text:'S₂₀ = 10 × (7 + 216) = 10 × 223' },
+  ],
+  answer: '∴  S₂₀ = 2230'
+},
+
+/* Q22a */
+{
+  type: 'qa', id: 'q22a', navLabel: 'Q22a',
+  qnum: 'Q 22a', heading: 'First Term 3, Second Term 7',
+  question: 'The first term of an arithmetic sequence is 3 and the second term is 7.\na)  Write down the common difference.',
+  hint: '💡 d = u₂ − u₁',
+  steps: [
+    { label:'Identify', text:'d = u₂ − u₁ = 7 − 3' },
+  ],
+  answer: '∴  d = 4'
+},
+
+/* Q22b */
+{
+  type: 'qa', id: 'q22b', navLabel: 'Q22b',
+  qnum: 'Q 22b', heading: 'First Term 3, Second Term 7',
+  question: 'The first term is 3 and d = 4.\nb)  Find the eighth term.',
+  hint: '💡 Use  uₙ = u₁ + (n−1)d  with n = 8.',
+  steps: [
+    { label:'Formula', text:'u₈ = 3 + (8−1) × 4 = 3 + 7 × 4 = 3 + 28' },
+  ],
+  answer: '∴  u₈ = 31'
+},
+
+/* Q22c */
+{
+  type: 'qa', id: 'q22c', navLabel: 'Q22c',
+  qnum: 'Q 22c', heading: 'First Term 3, Second Term 7',
+  question: 'The first term is 3 and d = 4.\nc)  Find the sum of the first 15 terms.',
+  hint: '💡 Use  Sₙ = n/2 [2u₁ + (n−1)d]  with n = 15.',
+  steps: [
+    { label:'Formula', text:'S₁₅ = 15/2 [2(3) + (15−1)(4)]' },
+    { label:'Calc',    text:'= 15/2 [6 + 56] = 15/2 × 62 = 15 × 31' },
+  ],
+  answer: '∴  S₁₅ = 465'
+},
+
+/* Q23a */
+{
+  type: 'qa', id: 'q23a', navLabel: 'Q23a',
+  qnum: 'Q 23a', heading: 'Second Term 13, Common Difference 5',
+  question: 'In an arithmetic sequence the second term is 13 and the common difference is 5.\na)  Write down the first term.',
+  hint: '💡  u₁ = u₂ − d',
+  steps: [
+    { label:'Calc', text:'u₁ = 13 − 5' },
+  ],
+  answer: '∴  u₁ = 8'
+},
+
+/* Q23b */
+{
+  type: 'qa', id: 'q23b', navLabel: 'Q23b',
+  qnum: 'Q 23b', heading: 'Second Term 13, Common Difference 5',
+  question: 'u₁ = 8,  d = 5.\nb)  Find the sum of the first 10 terms.',
+  hint: '💡 Use  Sₙ = n/2 [2u₁ + (n−1)d]  with n = 10.',
+  steps: [
+    { label:'Formula', text:'S₁₀ = 10/2 [2(8) + (10−1)(5)]' },
+    { label:'Calc',    text:'= 5 × [16 + 45] = 5 × 61' },
+  ],
+  answer: '∴  S₁₀ = 305'
+},
+
+/* Q24a */
+{
+  type: 'qa', id: 'q24a', navLabel: 'Q24a',
+  qnum: 'Q 24a', heading: 'First Term −8, 16th Term 67',
+  question: 'The first term of an arithmetic sequence is −8 and the 16th term is 67.\na)  Find the common difference.',
+  hint: '💡 Use  uₙ = u₁ + (n−1)d  with n = 16.',
+  steps: [
+    { label:'Equation', text:'u₁₆ = −8 + 15d = 67' },
+    { label:'Solve',    text:'15d = 67 + 8 = 75  →  d = 75/15' },
+  ],
+  answer: '∴  d = 5'
+},
+
+/* Q24b */
+{
+  type: 'qa', id: 'q24b', navLabel: 'Q24b',
+  qnum: 'Q 24b', heading: 'First Term −8, d = 5',
+  question: 'u₁ = −8,  d = 5.\nb)  Find the 25th term.',
+  hint: '💡 Use  uₙ = u₁ + (n−1)d  with n = 25.',
+  steps: [
+    { label:'Formula', text:'u₂₅ = −8 + (25−1) × 5 = −8 + 24 × 5 = −8 + 120' },
+  ],
+  answer: '∴  u₂₅ = 112'
+},
+
+/* Q25a */
+{
+  type: 'qa', id: 'q25a', navLabel: 'Q25a',
+  qnum: 'Q 25a', heading: 'Simple Interest — Sam invests £300 at 4%',
+  question: 'Sam invests £300 at 4% simple interest. She does not withdraw any money.\na)  How much does she have at the end of the first year?',
+  hint: '💡 Simple interest: same amount (4% of £300) added every year → arithmetic sequence.',
+  steps: [
+    { label:'Interest', text:'4% of 300 = 0.04 × 300 = £12 added each year' },
+    { label:'Year 1',   text:'300 + 12 = £312' },
+  ],
+  answer: '∴  £312 at the end of year 1'
+},
+
+/* Q25b */
+{
+  type: 'qa', id: 'q25b', navLabel: 'Q25b',
+  qnum: 'Q 25b', heading: 'Simple Interest — Sam invests £300 at 4%',
+  question: 'Sam invests £300 at 4% simple interest.\nb)  How much does she have at the end of the 10th year?',
+  hint: '💡 This is an arithmetic sequence with u₁ = 312, d = 12.  Find u₁₀.',
+  steps: [
+    { label:'Sequence', text:'u₁ = 312,  d = 12  (arithmetic)' },
+    { label:'Formula',  text:'u₁₀ = 312 + (10−1) × 12 = 312 + 9 × 12 = 312 + 108' },
+  ],
+  answer: '∴  £420 at the end of year 10'
+},
+
+/* ── DIVIDER: Q1–18 ─────────────────────────────── */
+{ type: 'divider', id: 'divider-q1', navLabel: '─', symbol: '1', bigNum: 'Q1–18', heading: 'Exercise 2A — Q1 to 18', sub: 'nth term, finding u₁ & d, number of terms, sums, sigma' },
+{ type:'qa', id:'q1a', navLabel:'Q1a', qnum:'Q 1a', heading:'Finding a Specific Term', question:'u\u2081 = 5, d = 4. Find u\u2081\u2082.', hint:'\ud83d\udca1 Use u\u2099 = u\u2081 + (n\u22121)d with n = 12.', steps:[{label:'Sub', text:'u\u2081\u2082 = 5 + 11 \u00d7 4 = 49'}], answer:'\u2234 u\u2081\u2082 = 49' },
+{ type:'qa', id:'q1b', navLabel:'Q1b', qnum:'Q 1b', heading:'Finding a Specific Term', question:'u\u2081 = 11, d = 3. Find u\u2082\u2080.', hint:'\ud83d\udca1 Use u\u2099 = u\u2081 + (n\u22121)d with n = 20.', steps:[{label:'Sub', text:'u\u2082\u2080 = 11 + 19 \u00d7 3 = 68'}], answer:'\u2234 u\u2082\u2080 = 68' },
+{ type:'qa', id:'q2a', navLabel:'Q2a', qnum:'Q 2a', heading:'Finding a Specific Term', question:'u\u2081 = 13, d = -7. Find u\u2086.', hint:'\ud83d\udca1 Use u\u2099 = u\u2081 + (n\u22121)d with n = 6.', steps:[{label:'Sub', text:'u\u2086 = 13 + 5 \u00d7 (-7) = 13 - 35 = -22'}], answer:'\u2234 u\u2086 = -22' },
+{ type:'qa', id:'q2b', navLabel:'Q2b', qnum:'Q 2b', heading:'Finding a Specific Term', question:'u\u2081 = 11, d = -3. Find u\u2081\u2088.', hint:'\ud83d\udca1 Use u\u2099 = u\u2081 + (n\u22121)d with n = 18.', steps:[{label:'Sub', text:'u\u2081\u2088 = 11 + 17 \u00d7 (-3) = 11 - 51 = -40'}], answer:'\u2234 u\u2081\u2088 = -40' },
+{ type:'qa', id:'q3a', navLabel:'Q3a', qnum:'Q 3a', heading:'Finding Common Difference', question:'u\u2081 = 7, u\u2085 = 15. Find d.', hint:'\ud83d\udca1 Write u\u2085 = u\u2081 + 4d and solve.', steps:[{label:'Eq', text:'15 = 7 + 4d => 4d = 8'}], answer:'\u2234 d = 2' },
+{ type:'qa', id:'q3b', navLabel:'Q3b', qnum:'Q 3b', heading:'Finding Common Difference', question:'u\u2081 = 19, u\u2089 = 75. Find d.', hint:'\ud83d\udca1 Write u\u2089 = u\u2081 + 8d and solve.', steps:[{label:'Eq', text:'75 = 19 + 8d => 8d = 56'}], answer:'\u2234 d = 7' },
+{ type:'qa', id:'q4a', navLabel:'Q4a', qnum:'Q 4a', heading:'Finding Common Difference', question:'u\u2081 = 10, u\u2082\u2081 = 0. Find d.', hint:'\ud83d\udca1 Write u\u2082\u2081 = u\u2081 + 20d.', steps:[{label:'Eq', text:'0 = 10 + 20d => d = -1/2'}], answer:'\u2234 d = -1/2' },
+{ type:'qa', id:'q4b', navLabel:'Q4b', qnum:'Q 4b', heading:'Finding Common Difference', question:'u\u2081 = 100, u\u2089 = 80. Find d.', hint:'\ud83d\udca1 Write u\u2089 = u\u2081 + 8d.', steps:[{label:'Eq', text:'80 = 100 + 8d => 8d = -20'}], answer:'\u2234 d = -2.5' },
+{ type:'qa', id:'q5a', navLabel:'Q5a', qnum:'Q 5a', heading:'Finding u1 and d', question:'u\u2088 = 12, u\u2081\u2081 = 33. Find u\u2081 and d.', hint:'\ud83d\udca1 Subtract the two equations.', steps:[{label:'Eqs', text:'u\u2081+7d=12 and u\u2081+10d=33'},{label:'Subtract', text:'3d=21 => d=7'},{label:'Back-sub', text:'u\u2081=12-49=-37'}], answer:'\u2234 d=7, u\u2081=-37' },
+{ type:'qa', id:'q5b', navLabel:'Q5b', qnum:'Q 5b', heading:'Finding u1 and d', question:'u\u2087 = 11, u\u2081\u2082 = 56. Find u\u2081 and d.', hint:'\ud83d\udca1 Subtract equations.', steps:[{label:'Eqs', text:'u\u2081+6d=11 and u\u2081+11d=56'},{label:'Subtract', text:'5d=45 => d=9'},{label:'Back-sub', text:'u\u2081=11-54=-43'}], answer:'\u2234 d=9, u\u2081=-43' },
+{ type:'qa', id:'q6a', navLabel:'Q6a', qnum:'Q 6a', heading:'Formula for nth Term', question:'u\u2081 = 8, d = -3. Write the formula for u\u2099.', hint:'\ud83d\udca1 Substitute into u\u2099 = u\u2081 + (n-1)d and simplify.', steps:[{label:'Sub', text:'u\u2099 = 8 + (n-1)(-3) = 11 - 3n'}], answer:'\u2234 u\u2099 = 11 - 3n' },
+{ type:'qa', id:'q6b', navLabel:'Q6b', qnum:'Q 6b', heading:'Formula for nth Term', question:'u\u2081 = 10, d = 4. Write the formula for u\u2099.', hint:'\ud83d\udca1 Substitute and simplify.', steps:[{label:'Sub', text:'u\u2099 = 10 + (n-1)(4) = 4n + 6'}], answer:'\u2234 u\u2099 = 4n + 6' },
+{ type:'qa', id:'q7a', navLabel:'Q7a', qnum:'Q 7a', heading:'Formula from Two Terms', question:'u\u2081 = 3, u\u2085 = 11. Write formula for u\u2099.', hint:'\ud83d\udca1 Find d first.', steps:[{label:'Find d', text:'3+4d=11 => d=2'},{label:'Formula', text:'u\u2099 = 3+(n-1)(2) = 2n+1'}], answer:'\u2234 u\u2099 = 2n+1' },
+{ type:'qa', id:'q7b', navLabel:'Q7b', qnum:'Q 7b', heading:'Formula from Two Terms', question:'u\u2081 = 10, u\u2081\u2081 = 50. Write formula for u\u2099.', hint:'\ud83d\udca1 Find d, then generalise.', steps:[{label:'Find d', text:'10+10d=50 => d=4'},{label:'Formula', text:'u\u2099 = 10+(n-1)(4) = 4n+6'}], answer:'\u2234 u\u2099 = 4n+6' },
+{ type:'qa', id:'q8a', navLabel:'Q8a', qnum:'Q 8a', heading:'Formula - Terms Not u1', question:'u\u2082 = 6, u\u2085 = 21. Write formula for u\u2099.', hint:'\ud83d\udca1 Use simultaneous equations.', steps:[{label:'Eqs', text:'u\u2081+d=6 and u\u2081+4d=21'},{label:'Solve', text:'3d=15 => d=5, u\u2081=1'},{label:'Formula', text:'u\u2099 = 1+(n-1)(5) = 5n-4'}], answer:'\u2234 u\u2099 = 5n-4' },
+{ type:'qa', id:'q8b', navLabel:'Q8b', qnum:'Q 8b', heading:'Formula - Terms Not u1', question:'u\u2083 = 14, u\u2086 = 5. Write formula for u\u2099.', hint:'\ud83d\udca1 Subtract to find d.', steps:[{label:'Eqs', text:'u\u2081+2d=14 and u\u2081+5d=5'},{label:'Solve', text:'3d=-9 => d=-3, u\u2081=20'},{label:'Formula', text:'u\u2099 = 20+(n-1)(-3) = 23-3n'}], answer:'\u2234 u\u2099 = 23-3n' },
+{ type:'qa', id:'q9a', navLabel:'Q9a', qnum:'Q 9a', heading:'Number of Terms', question:'2, 8, 14, ..., 200. How many terms?', hint:'\ud83d\udca1 Set u\u2099 = 200 and solve for n.', steps:[{label:'Eq', text:'2+(n-1)(6)=200 => n=34'}], answer:'\u2234 n = 34' },
+{ type:'qa', id:'q9b', navLabel:'Q9b', qnum:'Q 9b', heading:'Number of Terms', question:'5, 9, 13, ..., 97. How many terms?', hint:'\ud83d\udca1 Set u\u2099 = 97.', steps:[{label:'Eq', text:'5+(n-1)(4)=97 => n=24'}], answer:'\u2234 n = 24' },
+{ type:'qa', id:'q10a', navLabel:'Q10a', qnum:'Q 10a', heading:'Number of Terms (Decreasing)', question:'13, 7, 1, ..., -59. How many terms?', hint:'\ud83d\udca1 d is negative. Set u\u2099 = -59.', steps:[{label:'Eq', text:'13+(n-1)(-6)=-59 => n=13'}], answer:'\u2234 n = 13' },
+{ type:'qa', id:'q10b', navLabel:'Q10b', qnum:'Q 10b', heading:'Number of Terms (Decreasing)', question:'95, 88, 81, ..., -101. How many terms?', hint:'\ud83d\udca1 d=-7. Set u\u2099 = -101.', steps:[{label:'Eq', text:'95+(n-1)(-7)=-101 => n=29'}], answer:'\u2234 n = 29' },
+{ type:'qa', id:'q11a', navLabel:'Q11a', qnum:'Q 11a', heading:'Finding the Sum', question:'u\u2081 = 9, d = 4. Find S\u2081\u2082.', hint:'\ud83d\udca1 Use S\u2099 = n/2 [2u\u2081 + (n-1)d].', steps:[{label:'Formula', text:'S\u2081\u2082 = 6[18+44] = 6x62 = 372'}], answer:'\u2234 S\u2081\u2082 = 372' },
+{ type:'qa', id:'q11b', navLabel:'Q11b', qnum:'Q 11b', heading:'Finding the Sum', question:'u\u2081 = 17, d = 2. Find S\u2082\u2080.', hint:'\ud83d\udca1 Use S\u2099 = n/2 [2u\u2081 + (n-1)d].', steps:[{label:'Formula', text:'S\u2082\u2080 = 10[34+38] = 10x72 = 720'}], answer:'\u2234 S\u2082\u2080 = 720' },
+{ type:'qa', id:'q12a', navLabel:'Q12a', qnum:'Q 12a', heading:'Finding the Sum', question:'u\u2081 = 34, d = -7. Find S\u2081\u2081.', hint:'\ud83d\udca1 Use S\u2099 = n/2 [2u\u2081 + (n-1)d].', steps:[{label:'Formula', text:'S\u2081\u2081 = 11/2[68+10(-7)] = 11/2 x (-2) = -11'}], answer:'\u2234 S\u2081\u2081 = -11' },
+{ type:'qa', id:'q12b', navLabel:'Q12b', qnum:'Q 12b', heading:'Finding the Sum', question:'u\u2081 = 9, d = -11. Find S\u2088.', hint:'\ud83d\udca1 Use S\u2099 = n/2 [2u\u2081 + (n-1)d].', steps:[{label:'Formula', text:'S\u2088 = 4[18+7(-11)] = 4(-59) = -236'}], answer:'\u2234 S\u2088 = -236' },
+{ type:'qa', id:'q13a', navLabel:'Q13a', qnum:'Q 13a', heading:'Sum from Two Terms', question:'u\u2081 = 7, u\u2086 = 32. Find S\u2081\u2081.', hint:'\ud83d\udca1 Find d first, then use sum formula.', steps:[{label:'Find d', text:'7+5d=32 => d=5'},{label:'Sum', text:'S\u2081\u2081 = 11/2[14+10(5)] = 11/2 x 64 = 352'}], answer:'\u2234 S\u2081\u2081 = 352' },
+{ type:'qa', id:'q13b', navLabel:'Q13b', qnum:'Q 13b', heading:'Sum from Two Terms', question:'u\u2081 = 9, u\u2085 = 41. Find S\u2081\u2082.', hint:'\ud83d\udca1 Find d first.', steps:[{label:'Find d', text:'9+4d=41 => d=8'},{label:'Sum', text:'S\u2081\u2082 = 6[18+88] = 6x106 = 636'}], answer:'\u2234 S\u2081\u2082 = 636' },
+{ type:'qa', id:'q14a', navLabel:'Q14a', qnum:'Q 14a', heading:'Sum - First and Last Term', question:'u\u2081 = 9, u\u2088 = 37. Find S\u2088.', hint:'\ud83d\udca1 Use S\u2099 = n/2(u\u2081+u\u2099).', steps:[{label:'Formula', text:'S\u2088 = 4(9+37) = 4x46 = 184'}], answer:'\u2234 S\u2088 = 184' },
+{ type:'qa', id:'q14b', navLabel:'Q14b', qnum:'Q 14b', heading:'Sum - First and Last Term', question:'u\u2081 = 4, u\u2081\u2082 = 61. Find S\u2081\u2082.', hint:'\ud83d\udca1 Use S\u2099 = n/2(u\u2081+u\u2099).', steps:[{label:'Formula', text:'S\u2081\u2082 = 6(4+61) = 6x65 = 390'}], answer:'\u2234 S\u2081\u2082 = 390' },
+{ type:'qa', id:'q15a', navLabel:'Q15a', qnum:'Q 15a', heading:'Sum - First and Last Term', question:'u\u2081 = 27, u\u2081\u2080 = -36. Find S\u2081\u2080.', hint:'\ud83d\udca1 Use S\u2081\u2080 = 5(u\u2081+u\u2081\u2080).', steps:[{label:'Formula', text:'S\u2081\u2080 = 5(27+(-36)) = 5(-9) = -45'}], answer:'\u2234 S\u2081\u2080 = -45' },
+{ type:'qa', id:'q15b', navLabel:'Q15b', qnum:'Q 15b', heading:'Sum - First and Last Term', question:'u\u2081 = 50, u\u2082\u2080\u2080 = -50. Find S\u2082\u2080\u2080.', hint:'\ud83d\udca1 Use S\u2082\u2080\u2080 = 100(u\u2081+u\u2082\u2080\u2080).', steps:[{label:'Formula', text:'S\u2082\u2080\u2080 = 100(50+(-50)) = 100x0 = 0'}], answer:'\u2234 S\u2082\u2080\u2080 = 0' },
+{ type:'qa', id:'q16a', navLabel:'Q16a', qnum:'Q 16a', heading:'Sigma - Constant', question:'Evaluate sum(r=1 to 8) of 4.', hint:'\ud83d\udca1 Adding 4 eight times.', steps:[{label:'Calc', text:'= 4 x 8 = 32'}], answer:'\u2234 = 32' },
+{ type:'qa', id:'q16b', navLabel:'Q16b', qnum:'Q 16b', heading:'Sigma - Constant', question:'Evaluate sum(r=1 to 11) of 9.', hint:'\ud83d\udca1 Adding 9 eleven times.', steps:[{label:'Calc', text:'= 9 x 11 = 99'}], answer:'\u2234 = 99' },
+{ type:'qa', id:'q17a', navLabel:'Q17a', qnum:'Q 17a', heading:'Sigma - Arithmetic', question:'Evaluate sum(r=1 to 7) of (2r+7).', hint:'\ud83d\udca1 r=1 gives 9. u1=9, d=2, n=7.', steps:[{label:'Sum', text:'S7 = 7/2[18+12] = 7/2 x 30 = 105'}], answer:'\u2234 = 105' },
+{ type:'qa', id:'q17b', navLabel:'Q17b', qnum:'Q 17b', heading:'Sigma - Arithmetic', question:'Evaluate sum(r=1 to 10) of (3r+4).', hint:'\ud83d\udca1 r=1 gives 7. u1=7, d=3, n=10.', steps:[{label:'Sum', text:'S10 = 5[14+27] = 5x41 = 205'}], answer:'\u2234 = 205' },
+{ type:'qa', id:'q18a', navLabel:'Q18a', qnum:'Q 18a', heading:'Sigma - Starting at r>1', question:'Evaluate sum(r=5 to 17) of (6r-4).', hint:'\ud83d\udca1 r=5 gives 26. n=13 terms, d=6.', steps:[{label:'Sum', text:'S13 = 13/2[52+72] = 13/2 x 124 = 806'}], answer:'\u2234 = 806' },
+{ type:'qa', id:'q18b', navLabel:'Q18b', qnum:'Q 18b', heading:'Sigma - Starting at r>1', question:'Evaluate sum(r=3 to 8) of (12r-7).', hint:'\ud83d\udca1 r=3 gives 29. n=6 terms, d=12.', steps:[{label:'Sum', text:'S6 = 3[58+60] = 3x118 = 354'}], answer:'\u2234 = 354' },
+
+/* ── DIVIDER: Q26-52 ─────────────────────────────── */
+{ type: 'divider', id: 'divider-q26', navLabel: '─', symbol: '★', bigNum: 'Q26+', heading: 'Exercise 2A — Q26 to 52', sub: 'Applications, harder problems and proofs' },
+
+{ type:'qa', id:'q26', navLabel:'Q26', qnum:'Q 26', heading:"Daniel's Birthday Savings", question:"On Daniel's first birthday grandparents deposited £100. Each subsequent birthday they add £10. Total after his 21st birthday?", hint:'\ud83d\udca1 u1=100, d=10, n=21. Find S21.', steps:[{label:'Sum', text:'S21 = 21/2[200+200] = 21/2 x 400 = 4200'}], answer:'\u2234 Total = £4200' },
+{ type:'qa', id:'q27', navLabel:'Q27', qnum:'Q 27', heading:'Staircase Problem', question:'First step 10cm, each subsequent step 20cm higher. Staircase 270cm high. How many steps?', hint:'\ud83d\udca1 Set un = 270, u1=10, d=20.', steps:[{label:'Eq', text:'10+(n-1)(20)=270 => n=14'}], answer:'\u2234 14 steps' },
+{ type:'qa', id:'q28a', navLabel:'Q28a', qnum:'Q 28a', heading:'First=11, Last=75, d=8', question:'u1=11, last=75, d=8. Find the sum.', hint:'\ud83d\udca1 Find n first, then use Sn = n/2(u1+un).', steps:[{label:'Find n', text:'75=11+(n-1)(8) => n=9'},{label:'Sum', text:'S9 = 9/2(11+75) = 9/2 x 86 = 387'}], answer:'\u2234 S9 = 387' },
+{ type:'qa', id:'q28b', navLabel:'Q28b', qnum:'Q 28b', heading:'Same Endpoints, d=4', question:'Same sequence (first=11, last=75) but d=4. Find the sum.', hint:'\ud83d\udca1 Find new n.', steps:[{label:'Find n', text:'75=11+(n-1)(4) => n=17'},{label:'Sum', text:'S17 = 17/2 x 86 = 731'}], answer:'\u2234 S17 = 731' },
+{ type:'qa', id:'q29', navLabel:'Q29', qnum:'Q 29', heading:'Find the 50th Term', question:'u10=26, u30=83. Find u50.', hint:'\ud83d\udca1 Subtract equations to find d.', steps:[{label:'d', text:'20d=57 => d=2.85'},{label:'u1', text:'u1=26-9(2.85)=0.35'},{label:'u50', text:'u50=0.35+49(2.85)=140'}], answer:'\u2234 u50 = 140' },
+{ type:'qa', id:'q30a', navLabel:'Q30a', qnum:'Q 30a', heading:'u1=8, d=3, Last=68', question:'u1=8, d=3, last term=68. How many terms?', hint:'\ud83d\udca1 Set un=68.', steps:[{label:'Eq', text:'8+(n-1)(3)=68 => n=21'}], answer:'\u2234 n = 21' },
+{ type:'qa', id:'q30b', navLabel:'Q30b', qnum:'Q 30b', heading:'Sum of 21 Terms', question:'u1=8, d=3, n=21. Find the sum.', hint:'\ud83d\udca1 Use Sn = n/2(u1+un).', steps:[{label:'Sum', text:'S21 = 21/2(8+68) = 21/2 x 76 = 798'}], answer:'\u2234 S21 = 798' },
+{ type:'qa', id:'q31a', navLabel:'Q31a', qnum:'Q 31a', heading:'7th=35, 18th=112', question:'7th term=35, 18th term=112. Find d and u1.', hint:'\ud83d\udca1 Subtract the two equations.', steps:[{label:'Subtract', text:'11d=77 => d=7'},{label:'u1', text:'u1=35-42=-7'}], answer:'\u2234 d=7, u1=-7' },
+{ type:'qa', id:'q31b', navLabel:'Q31b', qnum:'Q 31b', heading:'Sum of 18 Terms', question:'u1=-7, d=7. Find S18.', hint:'\ud83d\udca1 Use sum formula.', steps:[{label:'Sum', text:'S18 = 9[-14+119] = 9x105 = 945'}], answer:'\u2234 S18 = 945' },
+{ type:'qa', id:'q32a', navLabel:'Q32a', qnum:'Q 32a', heading:'u10=16, u30=156 - Find u50', question:'u10=16, u30=156. Find u50.', hint:'\ud83d\udca1 Find d from 20-term gap.', steps:[{label:'d', text:'20d=140 => d=7'},{label:'u1', text:'u1=16-9(7)=-47'},{label:'u50', text:'u50=-47+49(7)=296'}], answer:'\u2234 u50 = 296' },
+{ type:'qa', id:'q32b', navLabel:'Q32b', qnum:'Q 32b', heading:'Sigma Sum', question:'u1=-47, d=7. Find sum(r=1 to 20) ur = S20.', hint:'\ud83d\udca1 Use sum formula.', steps:[{label:'Sum', text:'S20 = 10[-94+133] = 10x39 = 390'}], answer:'\u2234 = 390' },
+{ type:'qa', id:'q33', navLabel:'Q33', qnum:'Q 33', heading:'Sigma Sum', question:'Find sum(r=1 to 16) of (5r-3).', hint:'\ud83d\udca1 r=1: 2. u1=2, d=5, n=16.', steps:[{label:'Sum', text:'S16 = 8[4+75] = 8x79 = 632'}], answer:'\u2234 = 632' },
+{ type:'qa', id:'q34', navLabel:'Q34', qnum:'Q 34', heading:'Finding x in Consecutive Terms', question:'Three consecutive terms: 3x+1, 2x+1, 4x-5. Find x.', hint:'\ud83d\udca1 Equal differences: (2x+1)-(3x+1) = (4x-5)-(2x+1).', steps:[{label:'Eq', text:'-x = 2x-6 => x=2'}], answer:'\u2234 x = 2' },
+{ type:'qa', id:'q35', navLabel:'Q35', qnum:'Q 35', heading:'Two Conditions - Find 11th Term', question:'5th term = double 2nd term; 7th term = 28. Find 11th term.', hint:'\ud83d\udca1 Two equations in u1 and d.', steps:[{label:'Eq1', text:'u1+4d=2(u1+d) => u1=2d'},{label:'Eq2', text:'2d+6d=28 => d=3.5, u1=7'},{label:'u11', text:'u11=7+10(3.5)=42'}], answer:'\u2234 u11 = 42' },
+{ type:'qa', id:'q36', navLabel:'Q36', qnum:'Q 36', heading:'S3 = u10, u7 = 27', question:'Sum of first three terms equals 10th term; 7th term=27. Find 12th term.', hint:'\ud83d\udca1 Two equations in u1 and d.', steps:[{label:'S3=u10', text:'2u1=6d => u1=3d'},{label:'u7=27', text:'3d+6d=27 => d=3, u1=9'},{label:'u12', text:'u12=9+33=42'}], answer:'\u2234 u12 = 42' },
+{ type:'qa', id:'q37', navLabel:'Q37', qnum:'Q 37', heading:'Recurrence - Find Sum', question:'u(n+1) = un + 4, u1=10. Find sum(r=1 to 20).', hint:'\ud83d\udca1 Arithmetic with d=4, u1=10.', steps:[{label:'Sum', text:'S20 = 10[20+76] = 10x96 = 960'}], answer:'\u2234 = 960' },
+{ type:'qa', id:'q38a', navLabel:'Q38a', qnum:'Q 38a', heading:'Sequence U - Sum', question:'Sequence U: u1=7, d=12, last=139. Find sum.', hint:'\ud83d\udca1 Find n first.', steps:[{label:'n', text:'7+(n-1)(12)=139 => n=12'},{label:'Sum', text:'S12=6(7+139)=6x146=876'}], answer:'\u2234 Sum of U = 876' },
+{ type:'qa', id:'q38b', navLabel:'Q38b', qnum:'Q 38b', heading:'Sequence V - d=6', question:'V: same endpoints (7 and 139), d=6. Find sum.', hint:'\ud83d\udca1 Find new n for V.', steps:[{label:'n', text:'7+(n-1)(6)=139 => n=23'},{label:'Sum', text:'S23=23/2 x 146=1679'}], answer:'\u2234 Sum of V = 1679' },
+{ type:'qa', id:'q38c', navLabel:'Q38c', qnum:'Q 38c', heading:'Sequence W', question:'W: u1=7, d=6, n=12. Find sum.', hint:'\ud83d\udca1 Use Sn formula with n=12.', steps:[{label:'Sum', text:'S12=6[14+66]=6x80=480'}], answer:'\u2234 Sum of W = 480' },
+{ type:'qa', id:'q39', navLabel:'Q39', qnum:'Q 39', heading:"Joe's Game Scores", question:'Scores: 53, 94, 126, 170, 211. Predict 10th score.', hint:'\ud83d\udca1 Use average d=(211-53)/4.', steps:[{label:'Avg d', text:'d=39.5'},{label:'u10', text:'u10=53+9(39.5)=408.5'}], answer:'\u2234 Predicted score = 409' },
+{ type:'qa', id:'q40', navLabel:'Q40', qnum:'Q 40', heading:'Duck Migration Prediction', question:'Ducks: 3, 12, 23, 33 on four days. Predict day 6.', hint:'\ud83d\udca1 Average d=(33-3)/3=10.', steps:[{label:'u6', text:'u6=3+5(10)=53'}], answer:'\u2234 Predicted 53 ducks' },
+{ type:'qa', id:'q41', navLabel:'Q41', qnum:'Q 41', heading:'Finding Fourth Term', question:'First three terms: 1, a, 3a+5. Find the fourth term.', hint:'\ud83d\udca1 Equal differences: a-1 = (3a+5)-a.', steps:[{label:'Eq', text:'a-1=2a+5 => a=-6, d=-7'},{label:'4th', text:'u4=-13+(-7)=-20'}], answer:'\u2234 4th term = -20' },
+{ type:'qa', id:'q42a', navLabel:'Q42a', qnum:'Q 42a', heading:'Screen Time - First Zero Day', question:'Day 1: 200 min, reduces by 5/day. When does it hit zero?', hint:'\ud83d\udca1 Set un=0, u1=200, d=-5.', steps:[{label:'Eq', text:'200+(n-1)(-5)=0 => n=41'}], answer:'\u2234 Day 41' },
+{ type:'qa', id:'q42b', navLabel:'Q42b', qnum:'Q 42b', heading:'Screen Time - Total Minutes', question:'u1=200, d=-5, n=41. Total minutes on screens?', hint:'\ud83d\udca1 Use Sn = n/2(u1+un) with u41=0.', steps:[{label:'Sum', text:'S41=41/2(200+0)=41x100=4100'}], answer:'\u2234 Total = 4100 minutes' },
+{ type:'qa', id:'q43a', navLabel:'Q43a', qnum:'Q 43a', heading:'Step Programme - Reach 10000', question:'Day 1: 1000 steps, adds 500/day. Days to reach 10000?', hint:'\ud83d\udca1 Set un=10000.', steps:[{label:'Eq', text:'1000+(n-1)(500)=10000 => n=19'}], answer:'\u2234 19 days' },
+{ type:'qa', id:'q43b', navLabel:'Q43b', qnum:'Q 43b', heading:'Step Programme - Total 540000', question:'u1=1000, d=500. Days to total 540000 steps?', hint:'\ud83d\udca1 Set Sn=540000, solve quadratic.', steps:[{label:'Quadratic', text:'250n^2+750n=540000 => n^2+3n-2160=0'},{label:'Solve', text:'n=45'}], answer:'\u2234 45 days' },
+{ type:'qa', id:'q44a', navLabel:'Q44a', qnum:'Q 44a', heading:'Sn=2n^2+n - First Two Terms', question:'Sn = 2n^2+n. Find first two terms.', hint:'\ud83d\udca1 u1=S1, u2=S2-S1.', steps:[{label:'S1', text:'S1=3 => u1=3'},{label:'S2', text:'S2=10 => u2=7'}], answer:'\u2234 First two terms: 3, 7' },
+{ type:'qa', id:'q44b', navLabel:'Q44b', qnum:'Q 44b', heading:'Sn=2n^2+n - 50th Term', question:'Sn = 2n^2+n. Find u50.', hint:'\ud83d\udca1 u50 = S50 - S49.', steps:[{label:'S50', text:'S50=5050'},{label:'S49', text:'S49=4851'},{label:'u50', text:'5050-4851=199'}], answer:'\u2234 u50 = 199' },
+{ type:'qa', id:'q45', navLabel:'Q45', qnum:'Q 45', heading:'nth Term from Sn=n^2+4n', question:'Sn = n^2+4n. Find an expression for un.', hint:'\ud83d\udca1 un = Sn - S(n-1).', steps:[{label:'S(n-1)', text:'(n-1)^2+4(n-1)=n^2+2n-3'},{label:'un', text:'(n^2+4n)-(n^2+2n-3)=2n+3'}], answer:'\u2234 un = 2n+3' },
+{ type:'qa', id:'q46', navLabel:'Q46', qnum:'Q 46', heading:'9th Term = 4 times 3rd Term', question:'u9 = 4 x u3. Find u1.', hint:'\ud83d\udca1 Expand: u1+8d = 4(u1+2d).', steps:[{label:'Expand', text:'u1+8d=4u1+8d => 3u1=0'}], answer:'\u2234 u1 = 0' },
+{ type:'qa', id:'q47', navLabel:'Q47', qnum:'Q 47', heading:'Sum of 3-Digit Multiples of 7', question:'What is the sum of all three-digit multiples of 7?', hint:'\ud83d\udca1 First=105, Last=994, d=7.', steps:[{label:'Find n', text:'994=105+(n-1)(7) => n=128'},{label:'Sum', text:'S128=64(105+994)=64x1099=70336'}], answer:'\u2234 Sum = 70,336' },
+{ type:'qa', id:'q48', navLabel:'Q48', qnum:'Q 48', heading:'Multiples of 5 but not 3 (0-100)', question:'Sum of whole numbers 0-100, multiples of 5 but not multiples of 3.', hint:'\ud83d\udca1 Sum(mult 5) - Sum(mult 15).', steps:[{label:'Mult 5', text:'S=21/2(0+100)=1050'},{label:'Mult 15', text:'S=7/2(0+90)=315'},{label:'Answer', text:'1050-315=735'}], answer:'\u2234 Sum = 735' },
+{ type:'qa', id:'q49', navLabel:'Q49', qnum:'Q 49', heading:'Rope Cut into 10 Sections', question:'4m rope, 10 arithmetic sections, largest = 3x smallest. Find smallest section.', hint:'\ud83d\udca1 S10 = 4m total. u1=a, u10=3a.', steps:[{label:'Sum=4', text:'10/2(a+3a)=20a=4 => a=0.2m'}], answer:'\u2234 Smallest = 0.2m (20cm)' },
+{ type:'qa', id:'q50', navLabel:'Q50', qnum:'Q 50', heading:'Terms: 4, a, b, a-b', question:'4, a, b, a-b are consecutive arithmetic terms. Find the 6th term.', hint:'\ud83d\udca1 Equal differences give b=2, a=3, d=-1.', steps:[{label:'Solve', text:'From equal diffs: b=2, a=3, d=-1'},{label:'u6', text:'u6=4+5(-1)=-1'}], answer:'\u2234 u6 = -1' },
+{ type:'qa', id:'q51a', navLabel:'Q51a', qnum:'Q 51a', heading:'Proof - Constant Difference', question:'un = a + nd. Prove consecutive terms have constant difference.', hint:'\ud83d\udca1 Show u(n+1) - un = d (constant).', steps:[{label:'Diff', text:'u(n+1)-un = [a+(n+1)d]-[a+nd] = d'}], answer:'\u2234 Constant difference = d (proved)' },
+{ type:'qa', id:'q51b', navLabel:'Q51b', qnum:'Q 51b', heading:'Proof - Quadratic Sequence', question:'un = an^2+bn. Prove differences form an arithmetic sequence.', hint:'\ud83d\udca1 Find dn = u(n+1)-un and show it is linear.', steps:[{label:'dn', text:'dn = 2an+a+b (linear in n)'},{label:'Conclusion', text:'d(n+1)-dn = 2a = constant'}], answer:'\u2234 Differences form arithmetic sequence with common difference 2a (proved)' },
+{ type:'qa', id:'q52a', navLabel:'Q52a', qnum:'Q 52a', heading:'Counting Digits - Show 29', question:'Alessia writes 1,2,3,... Show that by writing 19 she has written 29 digits.', hint:'\ud83d\udca1 Count 1-digit and 2-digit numbers.', steps:[{label:'1-9', text:'9 numbers x 1 digit = 9'},{label:'10-19', text:'10 numbers x 2 digits = 20'},{label:'Total', text:'9+20=29'}], answer:'\u2234 29 digits (shown)' },
+{ type:'qa', id:'q52b', navLabel:'Q52b', qnum:'Q 52b', heading:'Counting Digits - Largest Number', question:'Total 342 digits. What was the largest number Alessia wrote?', hint:'\ud83d\udca1 After 1-9 (9) and 10-99 (180=189 total), into 3-digit numbers.', steps:[{label:'Remaining', text:'342-189=153 digits / 3 = 51 three-digit numbers'},{label:'Largest', text:'99+51=150'}], answer:'\u2234 Largest number = 150' },
+
 /* 19 ── SUMMARY ─────────────────────────────────── */
 {
   type: 'summary',
@@ -891,6 +1295,7 @@ function renderSlide(sl) {
     case 'examiner-q':  return renderExaminerQ(sl);
     case 'examiner':    return renderExaminer(sl);
     case 'exercise':    return renderExercise(sl);
+    case 'qa':          return renderQA(sl);
     case 'summary':     return renderSummary(sl);
     default: return '';
   }
@@ -1033,6 +1438,41 @@ function renderExercise(sl) {
   </div>`;
 }
 
+function renderQA(sl) {
+  const steps = sl.steps.map(s => `
+    <div class="sol-step">
+      <span class="step-badge">${escHtml(s.label)}</span>
+      <span class="step-content">${escHtml(s.text)}</span>
+    </div>`).join('');
+  const uid = sl.id + '-sol';
+  return `
+  <div class="slide s-qa" id="${sl.id}" data-slide>
+    <div class="qa-header">
+      <span class="qa-qnum">${escHtml(sl.qnum)}</span>
+      <h3>${escHtml(sl.heading)}</h3>
+    </div>
+    <div class="qa-body">
+      <div class="qa-question">
+        <div class="qa-qlabel">Question</div>
+        <div class="qa-qtext">${nl2br(sl.question)}</div>
+      </div>
+      <div class="qa-hint">${escHtml(sl.hint)}</div>
+      <div class="qa-solution">
+        <button class="qa-sol-toggle" onclick="toggleSol('${uid}')" id="${uid}-btn">
+          <span>▶ Show Solution</span>
+          <span class="qa-sol-arrow">▼</span>
+        </button>
+        <div class="qa-sol-body" id="${uid}">
+          <div class="qa-sol-inner">
+            <div class="sol-steps">${steps}</div>
+            <div class="sol-answer">${escHtml(sl.answer)}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
 function renderSummary() {
   const rows = [
     ['nth term', 'uₙ = u₁ + (n−1)d', 'Find any specific term'],
@@ -1053,6 +1493,16 @@ function renderSummary() {
       Always set up the sequence carefully — identify u₁ and d — before substituting.
     </p>
   </div>`;
+}
+
+/* ── Solution toggle ───────────────────────────────── */
+function toggleSol(uid) {
+  const body = document.getElementById(uid);
+  const btn  = document.getElementById(uid + '-btn');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+  btn.querySelector('span:first-child').textContent = isOpen ? '▶ Show Solution' : '▼ Hide Solution';
 }
 
 /* ── Build DOM ─────────────────────────────────────── */
